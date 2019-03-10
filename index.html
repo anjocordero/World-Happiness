@@ -2,11 +2,15 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Assignment 5</title>
+    <title>Final Project</title>
     <link href="styles.css" rel="stylesheet">
-    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css"> -->
     <link href="https://fonts.googleapis.com/css?family=Robo+Slab" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet">
+    <link rel="stylesheet" href="leaflet/leaflet.css"/>
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="leaflet/leaflet.js"></script>
     
   </head>
   <body>
@@ -14,7 +18,7 @@
     <select id="dropdown">
     </select>
     <svg id="force"><text x="50%" y="50" id="heading"></text></svg>
-    <svg id="map"><div id="legend"></div></svg>
+    <div id="map"><div id="legend"></div></div>
     <svg id="parallel"></svg>
     
     
@@ -26,6 +30,8 @@
   <script src="./scripts/d3/d3.scale.chromatic.js"></script>
   <script src="./scripts/d3/d3.topojson.js"></script>
   <script src="./scripts/d3/d3.queue.js"></script>
+  <script src="data/world_countries.js"></script>
+  <script src="data/us-states.js"></script>
   <script src="scripts/map_visualization.js"></script>
   <script src="scripts/force_chart.js"></script>
   <script src="scripts/parallel_coor.js"></script>
