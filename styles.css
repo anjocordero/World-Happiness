@@ -46,33 +46,49 @@ div.tooltip
 {
     display: block;
     position: absolute;
-    left: 33%;
-    height: 63%;
-    width: 33%;
+    left: 0%;
+    top: 0%;
+    height: 60%;
+    width: 100%;
     
 }
 
 
-#difference
+
+#force
 {
     display: block;
     position: absolute;
-    top:10%;
-    right: 0;   
-    height: 100%;
-    width: 33%;
+    top:60%;
+    left: 2%;  
+    width: 40%;
 
 }
+
+
+#force img
+{
+  
+  width: 40%;
+  margin-left: 30%;
+  
+}
+
+
 
 #parallel
 {
     display: block;
     position: absolute;
-    top:10%;
-    left: 1.5%;   
-    height: 100%;
-    width: 33%;
+    top: 60%;
+    right: 1.5%;   
+    width: 40%;
 
+}
+
+#parallel img
+{
+  height: 100%;
 }
 
 .axis 
@@ -81,16 +97,6 @@ div.tooltip
   font-size: 0.6em;
 }
 
-
-text 
-{
-  fill: black;
-  stroke: none;
-  position: relative;
-  left: 20%;
-  top: 3%;
-  font-family: 'futura';
-}
 
 .label 
 {
@@ -129,23 +135,20 @@ path.domain
 
 .activeCountry
 {
-    fill:lightgrey;
+  stroke: blue;
+  stroke-opacity: 1;
 }
 
 
 #legend
 {
     position: absolute;
-    top: 60%;
-    left: 37%;
+    top: 0%;
+    left: 1%;
     
 }
 
-.background path {
-  fill: none;
-  stroke: #ddd;
-  shape-rendering: crispEdges;
-}
+
 
 .foreground path {
   fill: none;
@@ -170,6 +173,12 @@ path.domain
 .axis text {
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
   cursor: move;
+  fill: black;
+  stroke: none;
+  position: relative;
+  left: 20%;
+  top: 3%;
+  font-family: 'futura';
 }
 
 .x.axis path {
@@ -184,9 +193,28 @@ path.domain
   fill: rgb(145,207,96);
 }
 
-#dropdown
+
+.background 
 {
-  position: absolute;
-  left:25%;
-  top: 5%;
+  fill: none;
+  pointer-events: all; 
+}
+
+.feature 
+{
+  /* fill: #ccc; */
+  cursor: pointer;
+}
+
+.feature.active 
+{
+  stroke: blue;
+}
+
+.mesh 
+{
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
