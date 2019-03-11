@@ -142,7 +142,7 @@ function drawMap(error, data, fieldMain, fieldSub)
             else if(d.properties.name == fieldSub) return 0.5;
             else return 0.5;
         })
-        .attr("stroke-wdith", "0.1px")
+        .attr("stroke-wdith", "0.4px")
         .attr("d", path)
         .attr("class", "feature")
         .attr("fill",function(d)
@@ -181,14 +181,14 @@ function drawMap(error, data, fieldMain, fieldSub)
             .style("left", (d3.event.pageX) + "px")   
             .style("top", (d3.event.pageY - 33) + "px");}
             )
-          .on("mouseout", function(d){
+        .on("mouseout", function(d){
             d3.select(this)
             .classed("activeCountry", false)
             tooltip.transition()    
             .duration(500)    
             .style("opacity", 0);}
             )
-          .on("mousemove", function(){
+        .on("mousemove", function(){
             tooltip
                 .style("top", (d3.event.pageY - 10) + "px" )
                 .style("left", (d3.event.pageX + 10) + "px");}

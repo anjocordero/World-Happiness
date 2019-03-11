@@ -7,14 +7,55 @@ body, html {
   }
 
 
+
+
+
 svg 
 {
     /* background: transparent; */
-    width:50%;
+    /* width:50%; */
     height:100%;
     /* float: left; */
 }
 
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: block; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0; 
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(255,255,255,0.8); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+  transition: 1s;
+}
+
+#overlay h1
+{
+  position: relative;
+  width: 600px;
+  margin: auto;
+  margin-top: 5%;
+}
+
+#overlay a
+{
+  position: relative;
+  left: 47%;
+  line-height: 3em;
+  text-align: center;
+  text-decoration: underline;
+  font-size: 20px;
+} 
+
+#overlay p
+{
+  width:40%;
+  margin: auto;
+}
 
 div.tooltip 
 {	
@@ -137,6 +178,7 @@ path.domain
 {
   stroke: blue;
   stroke-opacity: 1;
+  stroke-width: 2px;
 }
 
 
