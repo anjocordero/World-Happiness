@@ -219,7 +219,7 @@ function redrawMap(fieldMain, fieldSub)
 {
 
     svg.selectAll(".feature")
-    .classed("activeCountry", function(d)
+    .classed("active", function(d)
         {   
             
             if(fieldMain == undefined)
@@ -253,6 +253,7 @@ function redrawMap(fieldMain, fieldSub)
 
 function reset() 
 {
+    active = d3.select("#map").selectAll(".active")
     active.classed("active", false);
     active = d3.select(null);
   
