@@ -100,9 +100,10 @@ div.tooltip
 {
     display: block;
     position: absolute;
-    top:60%;
+    top:62%;
     left: 2%;  
     width: 40%;
+  
 
 }
 

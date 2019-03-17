@@ -118,32 +118,29 @@ legendSvg.append("g")
 .style("text-anchor", "left")
 .text("Happiness Score");
 
+
 /******************************Legends *********************/
 
 
 /******************************Functions*********************/
 
 
-function drawMap(error, data, fieldMain, fieldSub) 
+function drawMap(error, data) 
 {
+
     
     
+
+    
+
     var selection = "United States";
     var index;
     g.selectAll("path")
         .data(data[0].features)
         .enter().append("path")
         .attr("class", "country")
-        .attr("stroke", function(d)
-        {   
-            return "white";
-        })
-        .attr("stroke-opacity", function(d)
-        {   
-            if(d.properties.name == selection) return 0.5;
-            else if(d.properties.name == fieldSub) return 0.5;
-            else return 0.5;
-        })
+        .attr("stroke", "white")
+        .attr("stroke-opacity",0.5)
         .attr("stroke-wdith", "0.4px")
         .attr("d", path)
         .attr("class", "feature")
@@ -183,7 +180,8 @@ function drawMap(error, data, fieldMain, fieldSub)
                 // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
                 .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
 
-            drawForce(data, d.index, "rank")}
+            drawForce(data, d.index, "rank")
+            }
         )
         .on("mouseover", function(d){
             d3.select(this)
@@ -220,11 +218,44 @@ function drawMap(error, data, fieldMain, fieldSub)
               )
 };
 
-function clicked(d) 
+
+function redrawMap(fieldMain, fieldSub)
 {
-    
+
+    g.selectAll("path")
+        .enter().append("path")
+        .attr("class", "country")
+        .attr("stroke", function(d)
+        {   
+            console.log(fieldMain);
+            if(fieldMain == undefined)
+            {return "white";}
+
+            
+            for(var i = 0; i < fieldSub.length; i++)
+            {
+                
+                if(d.properties.name == fieldSub[i]) return "green";
+            }
+
+            if(d.properties.name == fieldMain) return "blue";
+
+            else {return "white";}
+            
+            
+
+        })
+
+
+        //  function(d)
+        // {   
+        //     if(d.properties.name == selection) return 0.5;
+        //     else if(d.properties.name == fieldSub) return 0.5;
+        //     else return 0.5;
+        // }
+
 }
-  
+
 function reset() 
 {
     active.classed("active", false);

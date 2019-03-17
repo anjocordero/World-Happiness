@@ -4,17 +4,6 @@ var boundingBoxForce = d3.select("#force").node().getBoundingClientRect();
 var forceWidth = boundingBoxForce.width,
     forceHeight = boundingBoxForce.height;
 
-var svgForce = d3.select("#force");
-
-  
-
-var simulation = d3.forceSimulation()
-    .force("link", d3.forceLink().distance(linkDistance).id(function(d) { return d.id; }))
-	.force('charge', d3.forceManyBody()
-    .strength(-1000)
-    .theta(0.9)
-    .distanceMax(1500))
-    .force("center", d3.forceCenter(forceWidth / 2, forceHeight / (4.5)))
 
 // let graph = 
 // {
@@ -36,6 +25,20 @@ var simulation = d3.forceSimulation()
 
 function drawForce(data, country, selection) 
 {
+
+    var svgForce = d3.select("#force");
+
+  
+
+    var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().distance(linkDistance).id(function(d) { return d.id; }))
+        .force('charge', d3.forceManyBody()
+        .strength(-1900)
+        .theta(-0.3)
+        )
+        .force("center", d3.forceCenter(forceWidth / 2, forceHeight / (4.3)))
+
+
     d3.select('#force').selectAll('g').remove();
     selection = "Economy..GDP.per.Capita."
     // console.log(data[1]);
@@ -43,9 +46,9 @@ function drawForce(data, country, selection)
     var key = 0;
     // graph = [];
     var graph = {"nodes": [], "links":[]};
-    // var indexArr = [];
+    var indexArr = [];
     
-    graph.nodes.push({"id": country, "name": data[1][country]["Country"]});
+    graph.nodes.push({"id": country, "name": data[1][country]["Country"], "value": data[1][country][selection]});
 
     if(country < 5)
     {
@@ -55,38 +58,39 @@ function drawForce(data, country, selection)
         
         for(var i = 1; i < 6 + j; i++) 
         {
-            graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"]});
+            graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"], "value": data[1][country + i][selection]});
 
-            graph.links.push({"source": country + i, "target": country, "value": data[1][country + i][selection], "distance": data[1][country + i][selection]})
+            graph.links.push({"source": country + i, "target": country, "distance": data[1][country + i][selection]})
 
         }
 
         for(var i = 1; i < country; i++)
         { 
-            graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"]});
+            graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"], "value": data[1][country - i][selection]});
 
-            graph.links.push({"source": country - i, "target": country, "value": data[1][country - i][selection], "distance": data[1][country - i][selection]});
+            graph.links.push({"source": country - i, "target": country, "distance": data[1][country - i][selection]});
         }
     }
 
     if(country > 149)
     {
         key = 1;
-        var j = country-5;
-        
-        for(var i = 1; i < j; i++) 
-        {
-            graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"]});
+        var j = (154 - country) + 5 ;
 
-            graph.links.push({"source": country + i, "target": country, "value": data[1][country + i][selection], "distance": data[1][country + i][selection]})
+        
+        for(var i = country; i < 154; i++) 
+        {
+            graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"], "value": data[1][country+i][selection]});
+
+            graph.links.push({"source": country + i, "target": country,  "distance": data[1][country + i][selection]})
 
         }
 
         for(var i = 1; i < 6 + j; i++)
         { 
-            graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"]});
+            graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"], "value": data[1][country - i][selection]});
 
-            graph.links.push({"source": country - i, "target": country, "value": data[1][country - i][selection], "distance": data[1][country - i][selection]});
+            graph.links.push({"source": country - i, "target": country, "distance": data[1][country - i][selection]});
         }
     }
 
@@ -94,16 +98,16 @@ function drawForce(data, country, selection)
     {  
         if(key == 1) break;
 
-        graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"]});
+        graph.nodes.push({"id": country - i, "name": data[1][country - i]["Country"], "value": data[1][country - i][selection]});
 
-        graph.links.push({"source": country - i, "target": country, "value": data[1][country - i][selection], "distance": data[1][country - i][selection]});
+        graph.links.push({"source": country - i, "target": country, "distance": data[1][country - i][selection]});
 
-        graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"]});
+        graph.nodes.push({"id": country + i, "name": data[1][country + i]["Country"], "value": data[1][country + i][selection]});
 
-        graph.links.push({"source": country + i, "target": country, "value": data[1][country + i][selection], "distance": data[1][country + i][selection]})
+        graph.links.push({"source": country + i, "target": country, "distance": data[1][country + i][selection]})
     }
 
-    console.log(graph.links);
+    
 
 
     var link = svgForce.append("g")
@@ -117,7 +121,41 @@ function drawForce(data, country, selection)
     .selectAll("circle")
             .data(graph.nodes)
     .enter().append("circle")
-            .attr("r", 5);
+            .attr("r", 24)
+            .on("mouseover", function(d){
+            d3.select(this)
+            .classed("activeCountry", true)
+            tooltip.transition()    
+            .duration(200)    
+            .style("opacity", 1);    
+            tooltip
+            .style("font", "12px sans-serif")
+            .style("background", "lightsteelblue")
+            .style("text-align", "center")
+            .style("height", "40px")
+            .html(function()
+            {
+                console.log(d);
+                if(d.value != undefined)
+                return d.name + " <br> " + selection + ": <br>" + d.value
+                else 
+                return d.name + " <br> Happiness Score: <br> No Data"
+            })  
+            .style("left", (d3.event.pageX) + "px")   
+            .style("top", (d3.event.pageY - 33) + "px");}
+            )
+        .on("mouseout", function(d){
+            d3.select(this)
+            .classed("activeCountry", false)
+            tooltip.transition()    
+            .duration(500)    
+            .style("opacity", 0);}
+            )
+        .on("mousemove", function(){
+            tooltip
+                .style("top", (d3.event.pageY - 10) + "px" )
+                .style("left", (d3.event.pageX + 10) + "px");}
+              )
             
     var label = svgForce.append("g")
         .attr("class", "labels")
@@ -134,6 +172,10 @@ function drawForce(data, country, selection)
     simulation.force("link")
         .links(graph.links);
 
+
+
+    redrawMap(graph.nodes[0], graph.nodes);
+
     function ticked() {
     link
         .attr("x1", function(d) { return d.source.x; })
@@ -142,7 +184,7 @@ function drawForce(data, country, selection)
         .attr("y2", function(d) { return d.target.y; });
 
     node
-            .attr("r", 16)
+            .attr("r", 21)
             .style("fill", "#efefef")
             .style("stroke", "#424242")
             .style("stroke-width", "1px")
@@ -154,14 +196,15 @@ function drawForce(data, country, selection)
             .attr("y", function (d) { return d.y; })
             .style("font-size", "10px").style("fill", "#333");
   }
+
+
 }
 
 
 
 function linkDistance(d) 
 {
+
     
-    return d.distance;
+    return (d.distance) * 90;
 }
-  
-// drawForce(graph)
