@@ -43,25 +43,23 @@ d3.csv("./data/2017.csv", function(error, data)
       // console.log(d);
       if(dataCounter == 0)
       {
-        tempObj = {country:d["Country"],
-                  rank:d["Happiness.Rank"],
-                  score:d["Happiness.Score"],
-                  gdp:d["Economy..GDP.per.Capita."],
-                  family:d["Family"],
-                  lifeExpectancy:d["Health..Life.Expectancy."],
-                  freedom:d["Freedom"],
-                  generosity:d["Generosity"],
-                  trust:d["Trust..Government.Corruption."],
-                  dystopia:d["Dystopia.Residual"]};
+        tempObj = {Score:d["Happiness.Score"],
+                  GDP:d["Economy..GDP.per.Capita."],
+                  Family:d["Family"],
+                  Health:d["Health..Life.Expectancy."],
+                  Freedom:d["Freedom"],
+                  Generosity:d["Generosity"],
+                  Government:d["Trust..Government.Corruption."],
+                  "Dystopia Residual":d["Dystopia.Residual"]};
       } 
       
-      else if(d["Country"] == tempObj.country)
-      {
+      // else if(d["Country"] == tempObj.country)
+      // {
         
-        if(d["record"] == "EFConsPerCap")
-        tempObj["Ecological Consumption Percapita"] = d["total"];
+      //   if(d["record"] == "EFConsPerCap")
+      //   tempObj["Ecological Consumption Percapita"] = d["total"];
 
-      }
+      // }
       
       if(dataCounter >= 9) 
       {
@@ -81,10 +79,12 @@ d3.csv("./data/2017.csv", function(error, data)
   // Scale the range of the data
   //d traverses the columns in the header row
 
+  var dimensions = {};
+
   x.domain(dimensions = d3.keys(masterArr[0]).filter(function(d) {
     
     
-    return d != "country" && (y[d] = d3.scaleLinear()
+    return d != "Country" && (y[d] = d3.scaleLinear()
         .domain(d3.extent(masterArr, function(p) { 
           //p traverses each rows/object
           // console.log(p);
