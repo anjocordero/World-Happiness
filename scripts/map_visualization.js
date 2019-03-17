@@ -31,36 +31,36 @@ var projection = d3.geoMercator()
 var zoom = d3.zoom().on("zoom", zoomed);
 var path = d3.geoPath().projection(projection);
 
-
 var svg = d3.select("#map").append("svg")
     .attr("width", width)
     .attr("height", height)
     .on("click", stopped, true);
 
-svg.append("rect")
+    svg.append("rect")
     .attr("class", "background")
     .attr("width", "100%")
     .attr("height", "100%")
     .on("click", reset);
 
-var g = svg.append("g");
+    var g = svg.append("g");
 
-svg
-    .call(zoom);
+    svg
+        .call(zoom);
+
 
 
 var url1 = "./data/world_countries.json";
 var url2 = "./data/2017.csv";
+// var url3 = "./data/data.json";
 
 var q = d3_queue.queue(1)
     .defer(d3.json, url1)
     .defer(d3.csv, url2)
+    // .defer(d3.json, url3)
     .awaitAll(drawMap);
 
 
 /******************************Global Vars *********************/
-
-
 
 /******************************Legends *********************/
 var legendHeight = 1000;
@@ -118,31 +118,26 @@ legendSvg.append("g")
 .style("text-anchor", "left")
 .text("Happiness Score");
 
+
 /******************************Legends *********************/
 
 
 /******************************Functions*********************/
 
 
-function drawMap(error, data, fieldMain, fieldSub) 
+function drawMap(error, data) 
 {
-    var selection = "United States"
+
+
+    var selection = "United States";
     var index;
     g.selectAll("path")
         .data(data[0].features)
         .enter().append("path")
         .attr("class", "country")
-        .attr("stroke", function(d)
-        {   
-            return "white";
-        })
-        .attr("stroke-opacity", function(d)
-        {   
-            if(d.properties.name == selection) return 0.5;
-            else if(d.properties.name == fieldSub) return 0.5;
-            else return 0.5;
-        })
-        .attr("stroke-width", "0.4px")
+        .attr("stroke", "white")
+        .attr("stroke-opacity",0.5)
+        .attr("stroke-wdith", "0.4px")
         .attr("d", path)
         .attr("class", "feature")
         .attr("fill",function(d)
@@ -152,14 +147,38 @@ function drawMap(error, data, fieldMain, fieldSub)
                 if (d.properties.name == "Greenland")
                 return (p.Country == "Denmark")
                 else return (p.Country == d.properties.name)});
-            if(index != -1) d.happiness = data[1][index]
-            ["Happiness.Score"];
+            if(index != -1)
+            {
+                d.happiness = data[1][index]["Happiness.Score"];
+                d.index = index;
+            }
+            
             else return "grey"
             // console.log(d.happiness)     
             return color(d.happiness);
       
         })
-        .on("click", clicked)
+        .on("click", function(d){
+            if (active.node() === this) return reset();
+            active.classed("active", false);
+            active = d3.select(this).classed("active", true);
+        
+            var bounds = path.bounds(d),
+                dx = bounds[1][0] - bounds[0][0],
+                dy = bounds[1][1] - bounds[0][1],
+                x = (bounds[0][0] + bounds[1][0]) / 2,
+                y = (bounds[0][1] + bounds[1][1]) / 2,
+                scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
+                translate = [width / 2 - scale * x, height / 2 - scale * y];
+        
+                svg.transition()
+                .duration(750)
+                // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
+                .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
+
+            drawForce(data, d.index, "rank")
+            }
+        )
         .on("mouseover", function(d){
             d3.select(this)
             .classed("activeCountry", true)
@@ -195,28 +214,46 @@ function drawMap(error, data, fieldMain, fieldSub)
               )
 };
 
-function clicked(d) 
+
+function redrawMap(fieldMain, fieldSub)
 {
-    if (active.node() === this) return reset();
-    active.classed("active", false);
-    active = d3.select(this).classed("active", true);
-  
-    var bounds = path.bounds(d),
-        dx = bounds[1][0] - bounds[0][0],
-        dy = bounds[1][1] - bounds[0][1],
-        x = (bounds[0][0] + bounds[1][0]) / 2,
-        y = (bounds[0][1] + bounds[1][1]) / 2,
-        scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
-        translate = [width / 2 - scale * x, height / 2 - scale * y];
-  
-    svg.transition()
-        .duration(750)
-        // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
-        .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
+
+    svg.selectAll(".feature")
+    .classed("active", function(d)
+        {   
+            
+            if(fieldMain == undefined)
+            {return false;}
+
+            
+            for(var i = 0; i < fieldSub.length; i++)
+            {
+                // console.log(fieldSub[i]["name"]);
+                if(d.properties.name == fieldSub[i]["name"]) return true;
+            }
+
+            if(d.properties.name == fieldMain["name"]) return true;
+
+            // else {return false;}
+            
+            
+
+        })
+
+
+
+        //  function(d)
+        // {   
+        //     if(d.properties.name == selection) return 0.5;
+        //     else if(d.properties.name == fieldSub) return 0.5;
+        //     else return 0.5;
+        // }
+
 }
-  
+
 function reset() 
 {
+    active = d3.select("#map").selectAll(".active")
     active.classed("active", false);
     active = d3.select(null);
   
