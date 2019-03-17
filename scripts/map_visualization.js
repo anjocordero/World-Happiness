@@ -142,7 +142,7 @@ function drawMap(error, data, fieldMain, fieldSub)
             else if(d.properties.name == fieldSub) return 0.5;
             else return 0.5;
         })
-        .attr("stroke-wdith", "0.4px")
+        .attr("stroke-width", "0.4px")
         .attr("d", path)
         .attr("class", "feature")
         .attr("fill",function(d)
