@@ -128,10 +128,6 @@ legendSvg.append("g")
 function drawMap(error, data) 
 {
 
-    
-    
-
-    
 
     var selection = "United States";
     var index;
@@ -222,29 +218,28 @@ function drawMap(error, data)
 function redrawMap(fieldMain, fieldSub)
 {
 
-    g.selectAll("path")
-        .enter().append("path")
-        .attr("class", "country")
-        .attr("stroke", function(d)
+    svg.selectAll(".feature")
+    .classed("activeCountry", function(d)
         {   
-            console.log(fieldMain);
+            
             if(fieldMain == undefined)
-            {return "white";}
+            {return false;}
 
             
             for(var i = 0; i < fieldSub.length; i++)
             {
-                
-                if(d.properties.name == fieldSub[i]) return "green";
+                // console.log(fieldSub[i]["name"]);
+                if(d.properties.name == fieldSub[i]["name"]) return true;
             }
 
-            if(d.properties.name == fieldMain) return "blue";
+            if(d.properties.name == fieldMain["name"]) return true;
 
-            else {return "white";}
+            // else {return false;}
             
             
 
         })
+
 
 
         //  function(d)
