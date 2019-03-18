@@ -165,7 +165,7 @@ path.domain
 {
     fill: none;
     stroke: black;
-    stroke-width: 1.5px;
+    stroke-width: 2px;
 }
   
 .line2 
@@ -198,7 +198,7 @@ path.domain
   fill: none;
   /* stroke: steelblue; */
   /* opacity: 0.3; */
-  stroke-width: 1px;
+  stroke-width: 1.4px;
 }
 
 .brush .extent {
@@ -264,4 +264,11 @@ path.domain
   stroke: #fff;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+.activePath
+{
+  stroke: red;
+  stroke-width: 4px;
+
 }

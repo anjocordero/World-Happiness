@@ -24,7 +24,7 @@ function highlightParallel(data, d)
       else return p.Name !== d.properties.name;
     })
     .transition()
-    .style("opacity", 0.1);
+    .style("opacity", 0.2);
 
   d3.select("." + d.properties.name.replace(/ /g, "_"))
     .raise()
@@ -70,6 +70,7 @@ function drawParallel(error, data)
           // console.log(d);
       tempObj = {
                 Name: d["Country"],
+                Rank: d["Happiness.Rank"],
                 Score:d["Happiness.Score"],
                 GDP:d["Economy..GDP.per.Capita."],
                 Family:d["Family"],
@@ -94,7 +95,7 @@ function drawParallel(error, data)
     x.domain(dimensions = d3.keys(masterArr[0]).filter(function(d) {
       
       
-      return d != "Name" && (y[d] = d3.scaleLinear()
+      return d != "Name" &&  d != "Rank" &&(y[d] = d3.scaleLinear()
           .domain(d3.extent(masterArr, function(p) { 
             //p traverses each rows/object
             // console.log(p);
@@ -111,8 +112,42 @@ function drawParallel(error, data)
       .enter()
       .append("path")
       .attr("stroke", "steelblue")
-      .attr("stroke-opacity", 0.7)
-      .attr("d", path);
+      .attr("stroke-opacity", 0.6)
+      .attr("d", path)
+      .on("mouseover", function(d){
+            d3.select(this)
+            .classed("activePath", true)
+            tooltip.transition()    
+            .duration(200)    
+            .style("opacity", 1);    
+            tooltip
+            .style("font", "12px sans-serif")
+            .style("background", "lightsteelblue")
+            .style("text-align", "center")
+            .style("height", "40px")
+            .html(function()
+            {
+                console.log(d);
+                
+                return d.Name + " <br> " + "Rank: <br>" + d.Rank
+                
+                
+            })  
+            .style("left", (d3.event.pageX) + "px")   
+            .style("top", (d3.event.pageY - 33) + "px");}
+            )
+        .on("mouseout", function(d){
+            d3.select(this)
+            .classed("activePath", false)
+            tooltip.transition()    
+            .duration(500)    
+            .style("opacity", 0);}
+            )
+        .on("mousemove", function(){
+            tooltip
+                .style("top", (d3.event.pageY - 10) + "px" )
+                .style("left", (d3.event.pageX + 10) + "px");}
+              );
 
     // Add a group element for each dimension.
     var g = svg.selectAll(".dimension")
