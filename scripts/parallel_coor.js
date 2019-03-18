@@ -1,6 +1,4 @@
-var color = d3.scaleLinear()
-.domain([3,8])
-.range(["#fff7ec", "#d7301f"]);
+
 
 var brush = d3.brush();
 
@@ -101,7 +99,7 @@ function drawParallel(error, data)
             //p traverses each rows/object
             // console.log(p);
             return +p[d]; }))
-          .range([svgHeight, 30]));
+          .range([svgHeight - 30, 30]));
     }));
 
     // // Add blue foreground lines for focus.

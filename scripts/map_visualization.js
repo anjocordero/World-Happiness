@@ -11,7 +11,7 @@ var tooltip = d3.select("body").append("div")
 
 var color = d3.scaleLinear()
 .domain([3,8])
-.range(["#fff7ec", "#d7301f"]);
+.range(["#fff7ec", "#2074B4"]); 
 
 
 var boundingBox = d3.select("#map").node().getBoundingClientRect();
@@ -88,7 +88,7 @@ legend.append("stop")
 
 legend.append("stop")
 .attr("offset", "100%")
-.attr("stop-color", "#d7301f")
+.attr("stop-color", "#2074B4")
 .attr("stop-opacity", 1);
 
 legendSvg.append("rect")
