@@ -248,10 +248,11 @@ function drawForce(data, country, selection)
 
 
 function linkDistance(d) 
-{
+{   
+    var threshold = 120;
 
     if(d.distance > 5)
-        return (d.distance - 5 ) * 50;
+        return Math.min((d.distance - 5 ) * 50, threshold);
         
-    else return (d.distance) * 90;
+    else return Math.min((d.distance) * 90, threshold);
 }
