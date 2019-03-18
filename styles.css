@@ -198,7 +198,7 @@ path.domain
   fill: none;
   /* stroke: steelblue; */
   /* opacity: 0.3; */
-  stroke-width: 1.5px;
+  stroke-width: 1px;
 }
 
 .brush .extent {

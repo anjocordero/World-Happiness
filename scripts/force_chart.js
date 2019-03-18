@@ -162,7 +162,42 @@ function drawForce(data, country, selection)
         .data(graph.nodes)
         .enter().append("text")
         .attr("class", "label")
-        .text(function(d) { return d.id; });
+        .text(function(d) { return d.id; })
+        .on("mouseover", function(d){
+            d3.select(this)
+            .classed("activeCountry", true)
+            tooltip.transition()    
+            .duration(200)    
+            .style("opacity", 1);    
+            tooltip
+            .style("font", "12px sans-serif")
+            .style("background", "lightsteelblue")
+            .style("text-align", "center")
+            .style("height", "40px")
+            .html(function()
+            {
+                console.log(d);
+                if(d.value != undefined)
+                return d.name + " <br> " + selection + ": <br>" + d.value
+                else 
+                return d.name + " <br> Happiness Score: <br> No Data"
+            })  
+            .style("left", (d3.event.pageX) + "px")   
+            .style("top", (d3.event.pageY - 33) + "px");}
+            )
+        .on("mouseout", function(d){
+            d3.select(this)
+            .classed("activeCountry", false)
+            tooltip.transition()    
+            .duration(500)    
+            .style("opacity", 0);}
+            )
+        .on("mousemove", function(){
+            tooltip
+                .style("top", (d3.event.pageY - 10) + "px" )
+                .style("left", (d3.event.pageX + 10) + "px");}
+              )
+        ;
 
     simulation
         .nodes(graph.nodes)
@@ -204,8 +239,8 @@ function drawForce(data, country, selection)
 function linkDistance(d) 
 {
 
-    if(d.distance > 4)
-        return (d.distance - 4 ) * 50;
+    if(d.distance > 5)
+        return (d.distance - 5 ) * 50;
         
     else return (d.distance) * 90;
 }

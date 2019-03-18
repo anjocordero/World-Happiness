@@ -38,7 +38,7 @@ function highlightParallel(data, d)
 
 function drawParallel(error, data)
 {
-  drawForce(data, 0, "Happiness.Score");
+  
   var masterArr = [];
 
   var line = d3.line(),
@@ -113,6 +113,7 @@ function drawParallel(error, data)
       .enter()
       .append("path")
       .attr("stroke", "steelblue")
+      .attr("stroke-opacity", 0.7)
       .attr("d", path);
 
     // Add a group element for each dimension.
