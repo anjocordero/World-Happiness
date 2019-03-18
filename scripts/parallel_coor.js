@@ -116,7 +116,9 @@ function drawParallel(error, data)
       .attr("d", path)
       .on("mouseover", function(d){
             d3.select(this)
-            .classed("activePath", true)
+            .raise()
+            .style("stroke", "red")
+            .style("stroke-width", "4px")
             tooltip.transition()    
             .duration(200)    
             .style("opacity", 1);    
@@ -138,7 +140,8 @@ function drawParallel(error, data)
             )
         .on("mouseout", function(d){
             d3.select(this)
-            .classed("activePath", false)
+            .style("stroke", "steelblue")
+            .style("stroke-width", "2px")
             tooltip.transition()    
             .duration(500)    
             .style("opacity", 0);}
