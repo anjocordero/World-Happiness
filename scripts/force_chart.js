@@ -254,9 +254,9 @@ function linkDistance(d)
     if(d.distance > 5)
         return Math.min((d.distance - 5 ) * 50);
     if(d.distance > 4)
-        return Math.min((d.distance - 4 ) * 60);
+        return Math.min((d.distance - 4 ) * 70);
     if(d.distance > 3)
-        return Math.min((d.distance - 3 ) * 70);
+        return Math.min((d.distance - 3 ) * 80);
         
     else return Math.min((d.distance) * 90);
 }
