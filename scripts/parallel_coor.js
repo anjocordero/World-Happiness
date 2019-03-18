@@ -10,7 +10,8 @@ var q = d3_queue.queue(1)
 
 var selectedCountry = null;
 
-function highlightParallel(d){ 
+function highlightParallel(d)
+{ 
   //////////////////////////////////////////
   // TODO: Implement once lines are drawn //
   //////////////////////////////////////////
@@ -19,7 +20,8 @@ function highlightParallel(d){
   console.log(selectedCountry.properties.name);
 }
 
-function drawParallel(error, data){
+function drawParallel(error, data)
+{
 
   var masterArr = [];
 
@@ -38,52 +40,33 @@ function drawParallel(error, data){
   var x = d3.scalePoint().range([0, svgWidth]).padding(1),
   y = {};
 
-  var svg = d3.select("#parallel");
+  var svg = d3.select("#parallel").append("svg");
 
   svg
   .attr("width", svgWidth)
   .attr("height", svgHeight)
   .append("g");
 
-  var line = d3.line(),
-    axis = d3.axisLeft();
+  
     
     var dataCounter = 0;
     var tempObj = {};
     data[1].forEach(function(d)
     {
-      
-        // console.log(d);
-        if(dataCounter == 0)
-        {
-          tempObj = {Score:d["Happiness.Score"],
-                    GDP:d["Economy..GDP.per.Capita."],
-                    Family:d["Family"],
-                    Health:d["Health..Life.Expectancy."],
-                    Freedom:d["Freedom"],
-                    Generosity:d["Generosity"],
-                    Government:d["Trust..Government.Corruption."],
-                    "Dystopia Residual":d["Dystopia.Residual"]};
-        } 
-        
-        // else if(d["Country"] == tempObj.country)
-        // {
-          
-        //   if(d["record"] == "EFConsPerCap")
-        //   tempObj["Ecological Consumption Percapita"] = d["total"];
-
-        // }
-        
-        if(dataCounter >= 9) 
-        {
-          
-          dataCounter = -1;
-          masterArr.push(tempObj);
-          // console.log(tempObj)
-          tempObj = {};
-        }
-
-        dataCounter++;
+          // console.log(d);
+      tempObj = {
+                Name: d["Country"],
+                Score:d["Happiness.Score"],
+                GDP:d["Economy..GDP.per.Capita."],
+                Family:d["Family"],
+                Health:d["Health..Life.Expectancy."],
+                Freedom:d["Freedom"],
+                Generosity:d["Generosity"],
+                Government:d["Trust..Government.Corruption."],
+                "Dystopia Residual":d["Dystopia.Residual"]};
+         masterArr.push(tempObj);
+                
+  
     })
 
     // console.log(masterArr);
@@ -97,7 +80,7 @@ function drawParallel(error, data){
     x.domain(dimensions = d3.keys(masterArr[0]).filter(function(d) {
       
       
-      return d != "Country" && (y[d] = d3.scaleLinear()
+      return d != "Name" && (y[d] = d3.scaleLinear()
           .domain(d3.extent(masterArr, function(p) { 
             //p traverses each rows/object
             // console.log(p);
@@ -106,22 +89,15 @@ function drawParallel(error, data){
     }));
 
     // // Add blue foreground lines for focus.
-    // foreground = svg.append("g")
-    //   .attr("class", "foreground")
-    //   .selectAll("path")
-    //   .data(masterArr)
-    //   .enter().append("path")
-    //   .attr("stroke", function(d)
-    //   {
-    //     if(field == d.name) return "red";
-    //     else return "steelblue";
-    //   })
-    //   .attr("opacity", function(d)
-    //   {
-    //     if(field == d.name) return 1;
-    //     else return 0.3;
-    //   })
-    //   .attr("d", path);
+    // console.log(masterArr)
+    foreground = svg.append("g")
+      .attr("class", "foreground")
+      .selectAll("path")
+      .data(masterArr)
+      .enter()
+      .append("path")
+      .attr("stroke", "steelblue")
+      .attr("d", path);
 
     // Add a group element for each dimension.
     var g = svg.selectAll(".dimension")
@@ -170,17 +146,19 @@ function drawParallel(error, data){
         .text(function(d) { return d; });
 
 
-  function position(d) {
+  function position(d) 
+  {
     var v;
     return v == null ? x(d) : v;
   }
 
 
   // Returns the path for a given data point.
-  this.path = function(d)
+  function path(d)
   {    
     return line(dimensions.map(function(p) { 
       // console.log(d[p]);
+      // console.log(p);
       return [position(p), y[p](d[p])]; }));
   }
 
