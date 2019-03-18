@@ -20,7 +20,10 @@ function highlightParallel(data, d)
 { 
   d3.selectAll(".Parallel")
     .filter(function(p){
-      return p.Name !== d.properties.name;
+      if (d.properties.name == "Greenland"){
+        return p.Name == "Denmark";
+      }
+      else return p.Name !== d.properties.name;
     })
     .transition()
     .style("opacity", 0.1);
@@ -35,7 +38,7 @@ function highlightParallel(data, d)
 
 function drawParallel(error, data)
 {
-
+  drawForce(data, 0, "Happiness.Score");
   var masterArr = [];
 
   var line = d3.line(),
