@@ -1,3 +1,9 @@
+var color = d3.scaleLinear()
+.domain([3,8])
+.range(["#fff7ec", "#d7301f"]);
+
+var brush = d3.brush();
+
 var url1 = "./data/world_countries.json";
 var url2 = "./data/2017.csv";
 
@@ -10,14 +16,21 @@ var q = d3_queue.queue(1)
 
 var selectedCountry = null;
 
-function highlightParallel(d)
+function highlightParallel(data, d)
 { 
-  //////////////////////////////////////////
-  // TODO: Implement once lines are drawn //
-  //////////////////////////////////////////
+  d3.selectAll(".Parallel")
+    .filter(function(p){
+      return p.Name !== d.properties.name;
+    })
+    .transition()
+    .style("opacity", 0.1);
 
-  selectedCountry = d // selectedCountry is from function(d)
-  console.log(selectedCountry.properties.name);
+  d3.select("." + d.properties.name.replace(/ /g, "_"))
+    .raise()
+    .style("opacity", 1);
+
+    selectedCountry = d // selectedCountry is from function(d)
+    console.log(selectedCountry.properties.name);
 }
 
 function drawParallel(error, data)
@@ -155,7 +168,9 @@ function drawParallel(error, data)
 
   // Returns the path for a given data point.
   function path(d)
-  {    
+  {  
+    this.classList.add("Parallel");
+    this.classList.add(d.Name.replace(/ /g, "_"));
     return line(dimensions.map(function(p) { 
       // console.log(d[p]);
       // console.log(p);

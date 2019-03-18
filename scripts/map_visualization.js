@@ -137,7 +137,7 @@ function drawMap(error, data)
         .attr("class", "country")
         .attr("stroke", "white")
         .attr("stroke-opacity",0.5)
-        .attr("stroke-wdith", "0.4px")
+        .attr("stroke-width", "0.4px")
         .attr("d", path)
         .attr("class", "feature")
         .attr("fill",function(d)
@@ -177,7 +177,7 @@ function drawMap(error, data)
                 .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
 
             drawForce(data, d.index, "Happiness.Score")
-            highlightParallel(d);
+            highlightParallel(data, d);
             }
         )
         .on("mouseover", function(d){
@@ -258,6 +258,11 @@ function reset()
     active.classed("active", false);
     active = d3.select(null);
   
+    // Reset parallel coordinate highlighting
+    d3.selectAll(".Parallel")
+        .transition()
+        .style("opacity", 1);
+
     svg.transition()
         .duration(750)
         // .call( zoom.transform, d3.zoomIdentity.translate(0, 0).scale(1) ); // not in d3 v4
