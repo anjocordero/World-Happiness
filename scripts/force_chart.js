@@ -204,6 +204,8 @@ function drawForce(data, country, selection)
 function linkDistance(d) 
 {
 
-    
-    return (d.distance) * 90;
+    if(d.distance > 4)
+        return (d.distance - 4 ) * 50;
+        
+    else return (d.distance) * 90;
 }
