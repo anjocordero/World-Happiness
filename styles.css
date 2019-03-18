@@ -178,7 +178,7 @@ path.domain
 
 .activeCountry
 {
-  stroke: blue;
+  stroke: red;
   stroke-opacity: 1;
   stroke-width: 2px;
 }
@@ -253,7 +253,7 @@ path.domain
 .feature.active 
 {
   
-  stroke: blue;
+  stroke: red;
   stroke-opacity: 1;
   stroke-width: 2px;
 }
@@ -271,4 +271,9 @@ path.domain
   stroke: red;
   stroke-width: 4px;
 
+}
+
+.activeSub
+{
+  stroke: yellow;
 }

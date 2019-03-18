@@ -115,6 +115,9 @@ function drawParallel(error, data)
       .attr("stroke-opacity", 0.6)
       .attr("d", path)
       .on("mouseover", function(d){
+
+            var tempThing = {name: d.Name}
+            redrawMap(tempThing, undefined);
             d3.select(this)
             .raise()
             .style("stroke", "red")
@@ -129,7 +132,7 @@ function drawParallel(error, data)
             .style("height", "40px")
             .html(function()
             {
-                console.log(d);
+
                 
                 return d.Name + " <br> " + "Rank: <br>" + d.Rank
                 
@@ -139,12 +142,16 @@ function drawParallel(error, data)
             .style("top", (d3.event.pageY - 33) + "px");}
             )
         .on("mouseout", function(d){
+          
             d3.select(this)
             .style("stroke", "steelblue")
             .style("stroke-width", "2px")
             tooltip.transition()    
             .duration(500)    
-            .style("opacity", 0);}
+            .style("opacity", 0);
+            
+            dedrawMap("a");
+            }
             )
         .on("mousemove", function(){
             tooltip

@@ -122,6 +122,9 @@ function drawForce(data, country, selection)
     .enter().append("circle")
             .attr("r", 24)
             .on("mouseover", function(d){
+                var tempThing1 = {name: data[1][country]["Country"]};
+            var tempThing2 = [{name: d.name}];
+            redrawMap(tempThing1, tempThing2);
             d3.select(this)
             .classed("activeCountry", true)
             tooltip.transition()    
@@ -134,7 +137,7 @@ function drawForce(data, country, selection)
             .style("height", "40px")
             .html(function()
             {
-                console.log(d);
+                
                 if(d.value != undefined)
                 return d.name + " <br> " + selection + ": <br>" + d.value
                 else 
@@ -144,6 +147,9 @@ function drawForce(data, country, selection)
             .style("top", (d3.event.pageY - 33) + "px");}
             )
         .on("mouseout", function(d){
+            var tempThing1 = {name: data[1][country]["Country"]}
+            dedrawMap(tempThing1);
+            
             d3.select(this)
             .classed("activeCountry", false)
             tooltip.transition()    
@@ -164,8 +170,11 @@ function drawForce(data, country, selection)
         .attr("class", "label")
         .text(function(d) { return d.id; })
         .on("mouseover", function(d){
+            var tempThing1 = {name: data[1][country]["Country"]};
+            var tempThing2 = [{name: d.name}];
+            redrawMap(tempThing1, tempThing2);
             d3.select(this)
-            .classed("activeCountry", true)
+            // .classed("activeCountry", true)
             tooltip.transition()    
             .duration(200)    
             .style("opacity", 1);    
@@ -176,7 +185,7 @@ function drawForce(data, country, selection)
             .style("height", "40px")
             .html(function()
             {
-                console.log(d);
+                // console.log(d);
                 if(d.value != undefined)
                 return d.name + " <br> " + selection + ": <br>" + d.value
                 else 
@@ -186,6 +195,8 @@ function drawForce(data, country, selection)
             .style("top", (d3.event.pageY - 33) + "px");}
             )
         .on("mouseout", function(d){
+            var tempThing1 = {name: data[1][country]["Country"]}
+            dedrawMap(tempThing1);
             d3.select(this)
             .classed("activeCountry", false)
             tooltip.transition()    

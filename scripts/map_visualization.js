@@ -171,16 +171,17 @@ function drawMap(error, data)
                 scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
                 translate = [width / 2 - scale * x, height / 2 - scale * y];
         
-                svg.transition()
-                .duration(750)
-                // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
-                .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
+                // svg.transition()
+                // .duration(750)
+                // // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
+                // .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
 
             drawForce(data, d.index, "Happiness.Score")
             highlightParallel(data, d);
             }
         )
         .on("mouseover", function(d){
+            
             d3.select(this)
             .classed("activeCountry", true)
             tooltip.transition()    
@@ -226,13 +227,14 @@ function redrawMap(fieldMain, fieldSub)
             if(fieldMain == undefined)
             {return false;}
 
-            
-            for(var i = 0; i < fieldSub.length; i++)
+            if(fieldSub != undefined)
             {
-                // console.log(fieldSub[i]["name"]);
-                if(d.properties.name == fieldSub[i]["name"]) return true;
+                for(var i = 0; i < fieldSub.length; i++)
+                {
+                    // console.log(fieldSub[i]["name"]);
+                    if(d.properties.name == fieldSub[i]["name"]) return true;
+                }
             }
-
             if(d.properties.name == fieldMain["name"]) return true;
 
             // else {return false;}
@@ -251,6 +253,17 @@ function redrawMap(fieldMain, fieldSub)
         // }
 
 }
+
+function dedrawMap(fieldMain)
+{
+    svg.selectAll(".feature")
+    .classed("active", function(d){
+        if(d.properties.name == fieldMain["name"]) return true;
+    else return false;
+
+    })
+}
+
 
 function reset() 
 {
