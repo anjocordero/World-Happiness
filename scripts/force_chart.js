@@ -252,7 +252,11 @@ function linkDistance(d)
     var threshold = 120;
 
     if(d.distance > 5)
-        return Math.min((d.distance - 5 ) * 50, threshold);
+        return Math.min((d.distance - 5 ) * 50);
+    if(d.distance > 4)
+        return Math.min((d.distance - 4 ) * 60);
+    if(d.distance > 3)
+        return Math.min((d.distance - 3 ) * 70);
         
-    else return Math.min((d.distance) * 90, threshold);
+    else return Math.min((d.distance) * 90);
 }
