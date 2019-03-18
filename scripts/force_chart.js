@@ -1,6 +1,5 @@
 var boundingBoxForce = d3.select("#force").node().getBoundingClientRect();
 
-
 var forceWidth = boundingBoxForce.width,
     forceHeight = boundingBoxForce.height;
 
@@ -40,7 +39,7 @@ function drawForce(data, country, selection)
 
 
     d3.select('#force').selectAll('g').remove();
-    selection = "Economy..GDP.per.Capita."
+    // selection = "Economy..GDP.per.Capita."
     // console.log(data[1]);
 
     var key = 0;

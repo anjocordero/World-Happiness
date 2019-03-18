@@ -176,7 +176,8 @@ function drawMap(error, data)
                 // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
                 .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
 
-            drawForce(data, d.index, "rank")
+            drawForce(data, d.index, "Economy..GDP.per.Capita.")
+            highlightParallel(d);
             }
         )
         .on("mouseover", function(d){
