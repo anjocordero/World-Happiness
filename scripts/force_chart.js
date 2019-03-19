@@ -35,7 +35,7 @@ function drawForce(data, country, selection)
         .strength(-1900)
         .theta(-0.3)
         )
-        .force("center", d3.forceCenter(forceWidth / 2, forceHeight / (4.3)))
+        .force("center", d3.forceCenter(forceWidth / 2, forceHeight / (3.8)))
 
 
     d3.select('#force').selectAll('g').remove();
@@ -220,6 +220,9 @@ function drawForce(data, country, selection)
 
 
     redrawMap(graph.nodes[0], graph.nodes);
+
+    d3.select("#heading")
+        .text("10 Countries with happiness ranking similar to " + data[1][country]["Country"] + " | Now showing parameter " + selection)
 
     function ticked() {
     link
