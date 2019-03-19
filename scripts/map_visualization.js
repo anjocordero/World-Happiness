@@ -161,6 +161,7 @@ function drawMap(error, data)
         .on("click", function(d){
             if (active.node() === this) return reset();
             active.classed("active", false);
+            d3.selectAll(".subActive").classed("subActive", false);
             active = d3.select(this).classed("active", true);
         
             var bounds = path.bounds(d),
@@ -227,24 +228,26 @@ function redrawMap(fieldMain, fieldSub)
             if(fieldMain == undefined)
             {return false;}
 
+            if(d.properties.name == fieldMain["name"]) return true;
+
+            // else {return false;}
+
+        })
+    .classed("subActive", function(d)
+        {
             if(fieldSub != undefined)
             {
                 for(var i = 0; i < fieldSub.length; i++)
                 {
                     // console.log(fieldSub[i]["name"]);
-                    if(d.properties.name == fieldSub[i]["name"]) return true;
+                    if(d.properties.name == fieldMain["name"]) {return false}
+                    else if(d.properties.name == fieldSub[i]["name"]) {return true};
                 }
             }
-            if(d.properties.name == fieldMain["name"]) return true;
-
-            // else {return false;}
-            
-            
-
         })
 
 
-
+        
         //  function(d)
         // {   
         //     if(d.properties.name == selection) return 0.5;
