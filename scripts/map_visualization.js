@@ -3,6 +3,7 @@
 
 /******************************Global Vars *********************/
 
+var selection = "Happiness.Score";
 
 var tooltip = d3.select("body").append("div") 
 .attr("class", "tooltip")       
@@ -142,7 +143,7 @@ function clickCountry(data, d, country){
         // // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
         // .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
 
-    drawForce(data, d.index, "Happiness.Score")
+    drawForce(data, d.index, selection)
     highlightParallel(data, d);
 }
 
