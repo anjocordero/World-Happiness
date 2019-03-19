@@ -1,16 +1,17 @@
 
 
-var brush = d3.brush();
+// var brush = d3.brush();
 
 var url1 = "./data/world_countries.json";
 var url2 = "./data/2017.csv";
 
-var q = d3_queue.queue(1)
-    .defer(d3.json, url1)
-    .defer(d3.csv, url2)
-    // .defer(d3.json, url3)
-    .awaitAll(drawParallel);
 
+
+var queue = d3.queue(1);
+    queue
+      .defer(d3.json, url1)
+      .defer(d3.csv, url2)
+      .awaitAll(drawParallel);
 
 var selectedCountry = null;
 
@@ -40,7 +41,6 @@ function highlightParallel(data, d)
 
 function drawParallel(error, data)
 {
-  
   var masterArr = [];
 
   var line = d3.line(),
@@ -87,6 +87,17 @@ function drawParallel(error, data)
                 
   
     })
+    data[0].features.forEach(function(d){
+      index = data[1].findIndex(function(p){
+        if (d.properties.name == "Greenland")
+        return (p.Country == "Denmark")
+        else return (p.Country == d.properties.name)});
+      if(index != -1)
+      {
+          d.happiness = data[1][index]["Happiness.Score"];
+          d.index = index;
+      }
+    })
 
     // console.log(masterArr);
 
@@ -118,6 +129,22 @@ function drawParallel(error, data)
       .attr("stroke", "steelblue")
       .attr("stroke-opacity", 0.6)
       .attr("d", path)
+      .on("click", function(d){
+
+        var countryFeature = data[0].features.filter(x=> x.properties.name == d.Name)[0] // returns d
+
+        countries = d3.selectAll(".feature")._groups[0];
+        var countryPath = null;
+
+        countries.forEach(function(c){
+          // console.log(d.Name + c.__data__.properties.name);
+            if (d.Name == c.__data__.properties.name){
+              countryPath = c;
+            }
+        })
+
+        clickCountry(data, countryFeature, countryPath);
+      })
       .on("mouseover", function(d){
 
             var tempThing = {name: d.Name}

@@ -59,7 +59,6 @@ var q = d3_queue.queue(1)
     // .defer(d3.json, url3)
     .awaitAll(drawMap);
 
-
 /******************************Global Vars *********************/
 
 /******************************Legends *********************/
@@ -124,6 +123,28 @@ legendSvg.append("g")
 
 /******************************Functions*********************/
 
+function clickCountry(data, d, country){
+    if (active.node() === country) return reset();
+    active.classed("active", false);
+    d3.selectAll(".subActive").classed("subActive", false);
+    active = d3.select(country).classed("active", true);
+
+    var bounds = path.bounds(d),
+        dx = bounds[1][0] - bounds[0][0],
+        dy = bounds[1][1] - bounds[0][1],
+        x = (bounds[0][0] + bounds[1][0]) / 2,
+        y = (bounds[0][1] + bounds[1][1]) / 2,
+        scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
+        translate = [width / 2 - scale * x, height / 2 - scale * y];
+
+        // svg.transition()
+        // .duration(750)
+        // // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
+        // .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
+
+    drawForce(data, d.index, "Happiness.Score")
+    highlightParallel(data, d);
+}
 
 function drawMap(error, data) 
 {
@@ -159,26 +180,7 @@ function drawMap(error, data)
       
         })
         .on("click", function(d){
-            if (active.node() === this) return reset();
-            active.classed("active", false);
-            d3.selectAll(".subActive").classed("subActive", false);
-            active = d3.select(this).classed("active", true);
-        
-            var bounds = path.bounds(d),
-                dx = bounds[1][0] - bounds[0][0],
-                dy = bounds[1][1] - bounds[0][1],
-                x = (bounds[0][0] + bounds[1][0]) / 2,
-                y = (bounds[0][1] + bounds[1][1]) / 2,
-                scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
-                translate = [width / 2 - scale * x, height / 2 - scale * y];
-        
-                // svg.transition()
-                // .duration(750)
-                // // .call(zoom.translate(translate).scale(scale).event); // not in d3 v4
-                // .call( zoom.transform, d3.zoomIdentity.translate(translate[0],translate[1]).scale(scale) ); // updated for d3 v4
-
-            drawForce(data, d.index, "Happiness.Score")
-            highlightParallel(data, d);
+                clickCountry(data, d, this);
             }
         )
         .on("mouseover", function(d){
@@ -215,6 +217,8 @@ function drawMap(error, data)
                 .style("top", (d3.event.pageY - 10) + "px" )
                 .style("left", (d3.event.pageX + 10) + "px");}
               )
+
+    return data;
 };
 
 
