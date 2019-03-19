@@ -121,6 +121,21 @@ function drawForce(data, country, selection)
             .data(graph.nodes)
     .enter().append("circle")
             .attr("r", 24)
+            .on("click", function(d){
+                var countryFeature = data[0].features.filter(x=> x.properties.name == d.name)[0] // returns d
+
+                countries = d3.selectAll(".feature")._groups[0];
+                var countryPath = null;
+        
+                countries.forEach(function(c){
+                  // console.log(d.Name + c.__data__.properties.name);
+                    if (d.name == c.__data__.properties.name){
+                      countryPath = c;
+                    }
+                })
+        
+                clickCountry(data, countryFeature, countryPath);
+            })
             .on("mouseover", function(d){
                 var tempThing1 = {name: data[1][country]["Country"]};
             var tempThing2 = [{name: d.name}];
