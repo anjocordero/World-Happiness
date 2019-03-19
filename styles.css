@@ -79,8 +79,13 @@ div.tooltip
 #heading
 {
   font-size: 1em;
-  text-anchor: middle;
+  /* text-anchor: middle */
   font-family: futura;
+  display: block;
+  height: 3em;
+  position: absolute;
+  top: 57%;
+  left: 7%;
   
 }
 #map

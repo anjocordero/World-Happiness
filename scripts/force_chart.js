@@ -222,7 +222,7 @@ function drawForce(data, country, selection)
     redrawMap(graph.nodes[0], graph.nodes);
 
     d3.select("#heading")
-        .text("10 Countries with happiness ranking similar to " + data[1][country]["Country"] + " | Now showing parameter " + selection)
+        .html("10 Countries with happiness ranking similar to " + data[1][country]["Country"] + "<br>" + "Now showing parameter " + selection)
 
     function ticked() {
     link
