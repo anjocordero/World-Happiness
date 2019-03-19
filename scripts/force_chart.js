@@ -153,8 +153,35 @@ function drawForce(data, country, selection)
             .html(function()
             {
                 
+                var tempSelection = null;
+                switch(selection){
+                    case "Happiness.Score":
+                    tempSelection =  "Happiness Score";
+                    break;
+                  case "Economy..GDP.per.Capita.":
+                    tempSelection = "GDP";
+                    break;
+                  case "Family":
+                    tempSelection = "Family";
+                    break;
+                  case "Health..Life.Expectancy.":
+                    tempSelection = "Health";
+                    break;
+                  case "Freedom":
+                    tempSelection = "Freedom";
+                    break;
+                  case "Generosity":
+                    tempSelection = "Generosity";
+                    break;
+                  case "Trust..Government.Corruption.":
+                    tempSelection = "Government";
+                    break;
+                  case "Dystopia.Residual":
+                    tempSelection = "Dystopia Residual";
+                }
+
                 if(d.value != undefined)
-                return d.name + " <br> " + selection + ": <br>" + d.value
+                return d.name + " <br> " + tempSelection + ": <br>" + d.value
                 else 
                 return d.name + " <br> Happiness Score: <br> No Data"
             })  
@@ -201,8 +228,36 @@ function drawForce(data, country, selection)
             .html(function()
             {
                 // console.log(d);
+
+                var tempSelection = null;
+                switch(selection){
+                    case "Happiness.Score":
+                    tempSelection =  "Happiness Score";
+                    break;
+                  case "Economy..GDP.per.Capita.":
+                    tempSelection = "GDP";
+                    break;
+                  case "Family":
+                    tempSelection = "Family";
+                    break;
+                  case "Health..Life.Expectancy.":
+                    tempSelection = "Health";
+                    break;
+                  case "Freedom":
+                    tempSelection = "Freedom";
+                    break;
+                  case "Generosity":
+                    tempSelection = "Generosity";
+                    break;
+                  case "Trust..Government.Corruption.":
+                    tempSelection = "Government";
+                    break;
+                  case "Dystopia.Residual":
+                    tempSelection = "Dystopia Residual";
+                }
+
                 if(d.value != undefined)
-                return d.name + " <br> " + selection + ": <br>" + d.value
+                return d.name + " <br> " + tempSelection + ": <br>" + d.value
                 else 
                 return d.name + " <br> Happiness Score: <br> No Data"
             })  
@@ -236,8 +291,35 @@ function drawForce(data, country, selection)
 
     redrawMap(graph.nodes[0], graph.nodes);
 
+    var tempSelection = null;
+    switch(selection){
+        case "Happiness.Score":
+        tempSelection =  "Happiness Score";
+        break;
+      case "Economy..GDP.per.Capita.":
+        tempSelection = "GDP";
+        break;
+      case "Family":
+        tempSelection = "Family";
+        break;
+      case "Health..Life.Expectancy.":
+        tempSelection = "Health";
+        break;
+      case "Freedom":
+        tempSelection = "Freedom";
+        break;
+      case "Generosity":
+        tempSelection = "Generosity";
+        break;
+      case "Trust..Government.Corruption.":
+        tempSelection = "Government";
+        break;
+      case "Dystopia.Residual":
+        tempSelection = "Dystopia Residual";
+    }
+
     d3.select("#heading")
-        .html("10 Countries with happiness ranking similar to " + data[1][country]["Country"] + "<br>" + "Now showing parameter " + selection)
+        .html("10 Countries with happiness ranking similar to " + data[1][country]["Country"] + "<br>" + "Now showing parameter " + tempSelection)
 
     function ticked() {
     link
