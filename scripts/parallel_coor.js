@@ -30,7 +30,7 @@ function highlightParallel(data, d)
 
   d3.select("." + d.properties.name.replace(/ /g, "_"))
     .raise()
-    .style("stroke", "red")
+    .style("stroke", "#C1CB12")
     .style("stroke-width", "4px")
     .style("opacity", 1);
 
