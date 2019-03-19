@@ -272,6 +272,7 @@ function reset()
 {
     active = d3.select("#map").selectAll(".active")
     active.classed("active", false);
+    d3.selectAll(".subActive").classed("subActive", false);
     active = d3.select(null);
   
     // Reset parallel coordinate highlighting
