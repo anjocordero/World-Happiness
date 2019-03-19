@@ -24,10 +24,14 @@ function highlightParallel(data, d)
       else return p.Name !== d.properties.name;
     })
     .transition()
-    .style("opacity", 0.2);
+    .style("opacity", 0.2)
+    .style("stroke", "steelblue")
+    .style("stroke-width", "2px");
 
   d3.select("." + d.properties.name.replace(/ /g, "_"))
     .raise()
+    .style("stroke", "red")
+    .style("stroke-width", "4px")
     .style("opacity", 1);
 
     selectedCountry = d // selectedCountry is from function(d)

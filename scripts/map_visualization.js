@@ -278,6 +278,8 @@ function reset()
     // Reset parallel coordinate highlighting
     d3.selectAll(".Parallel")
         .transition()
+        .style("stroke", "steelblue")
+        .style("stroke-width", "2px")
         .style("opacity", 1);
 
     svg.transition()
