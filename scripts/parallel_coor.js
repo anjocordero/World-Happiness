@@ -151,7 +151,7 @@ function drawParallel(error, data)
             redrawMap(tempThing, undefined);
             d3.select(this)
             .raise()
-            .style("stroke", "red")
+            .style("stroke", "#C1CB12")
             .style("stroke-width", "4px")
             tooltip.transition()    
             .duration(200)    
